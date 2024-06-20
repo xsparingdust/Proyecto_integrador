@@ -18,9 +18,17 @@ public class DatosIniciales implements ApplicationRunner {
     private BCryptPasswordEncoder passwordEncoder;
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String passSinCifrar= "admin";
-        String passCifrado=  passwordEncoder.encode(passSinCifrar);
-        Usuario usuario= new Usuario("jorgito","jpereryradh","admin@admin.com",passCifrado, UsuarioRole.ROLE_USER);
-        usuarioRepository.save(usuario);
+        // Crear usuario con rol USER
+        String passSinCifrarUser = "user";
+        String passCifradoUser = passwordEncoder.encode(passSinCifrarUser);
+        Usuario usuarioUser = new Usuario("Usuario", "usuario", "user@example.com", passCifradoUser, UsuarioRole.ROLE_USER);
+        usuarioRepository.save(usuarioUser);
+
+        // Crear usuario con rol ADMIN
+        String passSinCifrarAdmin = "admin";
+        String passCifradoAdmin = passwordEncoder.encode(passSinCifrarAdmin);
+        Usuario usuarioAdmin = new Usuario("Admin", "admin", "admin@example.com", passCifradoAdmin, UsuarioRole.ROLE_ADMIN);
+        usuarioRepository.save(usuarioAdmin);
     }
 }
+
