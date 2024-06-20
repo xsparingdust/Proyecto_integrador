@@ -1,9 +1,9 @@
 window.addEventListener('load', function () {
-    const url = '/turnos/buscarTodos'; // URL de la API para obtener los turnos
+    const url = '/turnos'; // URL base de la API para los turnos
 
     // Función para cargar y mostrar los turnos desde la API
     function cargarTurnos() {
-        fetch(url)
+        fetch(url + '/buscarTodos')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error en la solicitud.');
@@ -48,7 +48,7 @@ window.addEventListener('load', function () {
 
     // Función para cargar datos de un turno específico para editar
     function cargarDatosTurnoParaEdicion(turnoId) {
-        fetch(`${url}/${turnoId}`)
+        fetch(`${url}/${turnoId}`, {
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error en la solicitud.');
@@ -95,24 +95,25 @@ window.addEventListener('load', function () {
             },
             body: JSON.stringify(data)
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al actualizar el turno.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Mostrar mensaje de éxito o actualizar la lista de turnos
-                document.getElementById('response').innerHTML = '<div class="alert alert-success" role="alert">Turno actualizado correctamente.</div>';
-                document.getElementById('response').style.display = 'block';
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al actualizar el turno.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Mostrar mensaje de éxito o actualizar la lista de turnos
+            document.getElementById('response').innerHTML = '<div class="alert alert-success" role="alert">Turno actualizado correctamente.</div>';
+            document.getElementById('response').style.display = 'block';
 
-                // Volver a cargar los turnos después de la actualización
-                cargarTurnos();
-            })
-            .catch(error => {
-                console.error('Error al actualizar el turno:', error);
-                document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Error al actualizar el turno.</div>';
-                document.getElementById('response').style.display = 'block';
-            });
+            // Volver a cargar los turnos después de la actualización
+            cargarTurnos();
+        })
+        .catch(error => {
+            console.error('Error al actualizar el turno:', error);
+            document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Error al actualizar el turno.</div>';
+            document.getElementById('response').style.display = 'block';
+        });
     });
 });
+
