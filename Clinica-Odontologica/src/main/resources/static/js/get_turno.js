@@ -48,7 +48,7 @@ window.addEventListener('load', function () {
 
     // Función para cargar datos de un turno específico para editar
     function cargarDatosTurnoParaEdicion(turnoId) {
-        fetch(`${url}/${turnoId}`, {
+        fetch(`${url}/${turnoId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error en la solicitud.');
